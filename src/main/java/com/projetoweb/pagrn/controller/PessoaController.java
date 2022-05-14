@@ -19,7 +19,7 @@ import com.projetoweb.pagrn.service.PessoaService;
 
 
 @RestController
-@RequestMapping("/Pessoa")
+@RequestMapping("/pessoa")
 public class PessoaController {
 	
 	 @Autowired
@@ -43,7 +43,12 @@ public class PessoaController {
 
 	    @PostMapping
 	    public ResponseEntity<Pessoa> insert(@RequestBody Pessoa c){
-	    	Pessoa	pessoa = service.insert(c);
+	    	if(c.getCpf() == null || c.getDataNasc()== null || c.getTelefone()== null ||
+				c.getNome()== null || c.getNomeMae()== null || c.getSexo()== null ||
+				c.getEstadoCivil()== null){
+				return ResponseEntity.status(400).body(c);
+			}
+		 	Pessoa	pessoa = service.insert(c);
 	        return ResponseEntity.status(201).body(pessoa);
 	    }
 

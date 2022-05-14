@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 
 @Entity(name="Pessoa")
@@ -36,8 +37,17 @@ public class Pessoa {
 	@Column(nullable = false)
 	private String nomeMae;
 	private String foto;
+	@ManyToOne
+	private Endereco endereco;
 
-	public Pessoa(String nome, String email, String telefone, String sexo, LocalDateTime dataNasc, String nomeMae) {
+	@ManyToMany
+	@JoinTable(
+			name="pessoa_deficiencia",
+			joinColumns = @JoinColumn(name="pessoa_id"),
+			inverseJoinColumns = @JoinColumn(name="course_id")	)
+	private Set<Deficiencia> deficiencias;
+
+	public Pessoa(String nome, String email, String telefone, String sexo, LocalDateTime dataNasc, String nomeMae,Endereco endereco) {
 
 		this.nome = nome;
 		this.email = email;
@@ -45,6 +55,7 @@ public class Pessoa {
 		this.sexo = sexo;
 		this.dataNasc = dataNasc;
 		this.nomeMae = nomeMae;
+		this.endereco = endereco;
 	}
 
 	public Long getId() {

@@ -49,7 +49,9 @@ public class DeficienciaService {
         return repository.findAll();
     }
 
-
+    public List<Deficiencia> paginatedList(Long page){
+        return repository.findPaginatedDeficiency(page);
+    }
 }
 
 

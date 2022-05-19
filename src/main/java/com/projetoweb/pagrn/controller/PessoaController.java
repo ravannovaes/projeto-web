@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.projetoweb.pagrn.model.Pessoa;
 import com.projetoweb.pagrn.service.PessoaService;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 
 @RestController
 @RequestMapping("/pessoa")
@@ -26,18 +30,32 @@ public class PessoaController {
 	private PessoaService service;
 
 	@GetMapping
-	public List<Pessoa> listALl(){
-		return service.listAll();
+	public ResponseEntity<List<Pessoa>> listALl(){
+
+		//return service.listAll();
+		List<Pessoa> pessoaList = service.listAll();
+		if(pessoaList.isEmpty()){
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}else{
+			for(Pessoa d : pessoaList){
+				long id = d.getId();
+				d.add(linkTo(methodOn(PessoaController.class).getOne(id)).withSelfRel());
+			}
+			return new ResponseEntity<List<Pessoa>>(pessoaList,HttpStatus.OK);
+		}
 	}
 
 	@GetMapping(path = {"/{id}"})
 	public ResponseEntity<Pessoa> getOne(@PathVariable Long id){
-		Optional<Pessoa> cliente = service.findById(id);
+		Optional<Pessoa> pessoa = service.findById(id);
 
-		if (cliente.isEmpty()){
-			return ResponseEntity.notFound().build();
+		if (pessoa.isEmpty()){
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			//return ResponseEntity.notFound().build();
 		}else{
-			return ResponseEntity.ok(cliente.get());
+			pessoa.get().add(linkTo(methodOn(PessoaController.class).listALl()).withRel("Lista de pessoas"));
+			return new ResponseEntity<Pessoa>(pessoa.get(),HttpStatus.OK);
+			//return ResponseEntity.ok(cliente.get());
 		}
 	}
 

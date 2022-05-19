@@ -6,6 +6,7 @@ import java.util.Optional;
 import com.projetoweb.pagrn.model.Endereco;
 import com.projetoweb.pagrn.service.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 
 @RestController
@@ -26,18 +29,32 @@ public class EnderecoController {
     private EnderecoService service;
 
     @GetMapping
-    public List<Endereco> listALl(){
-        return service.listAll();
+    public ResponseEntity<List<Endereco>> listALl(){
+
+        //return service.listAll();
+        List<Endereco> enderecoList = service.listAll();
+        if(enderecoList.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }else{
+            for(Endereco d : enderecoList){
+                long id = d.getId();
+                d.add(linkTo(methodOn(EnderecoController.class).getOne(id)).withSelfRel());
+            }
+            return new ResponseEntity<List<Endereco>>(enderecoList,HttpStatus.OK);
+        }
     }
 
     @GetMapping(path = {"/{id}"})
     public ResponseEntity<Endereco> getOne(@PathVariable Long id){
-        Optional<Endereco> cliente = service.findById(id);
+        Optional<Endereco> endereco = service.findById(id);
 
-        if (cliente.isEmpty()){
-            return ResponseEntity.notFound().build();
+        if (endereco.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            //return ResponseEntity.notFound().build();
         }else{
-            return ResponseEntity.ok(cliente.get());
+            endereco.get().add(linkTo(methodOn(EnderecoController.class).listALl()).withRel("Lista de endereços"));
+            return new ResponseEntity<Endereco>(endereco.get(),HttpStatus.OK);
+            //return ResponseEntity.ok(cliente.get());
         }
     }
 

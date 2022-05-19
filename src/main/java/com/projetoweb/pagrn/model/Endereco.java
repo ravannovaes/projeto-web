@@ -1,13 +1,15 @@
 package com.projetoweb.pagrn.model;
 
 
+import org.springframework.hateoas.RepresentationModel;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name="Endereco")
-public class Endereco {
+public class Endereco extends RepresentationModel<Endereco> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO )
     private Long id;

@@ -6,11 +6,15 @@ import java.util.Optional;
 import com.projetoweb.pagrn.model.Deficiencia;
 import com.projetoweb.pagrn.service.DeficienciaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.projetoweb.pagrn.model.Pessoa;
 import com.projetoweb.pagrn.service.PessoaService;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 
 @RestController
@@ -21,8 +25,18 @@ public class DeficienciaController {
     private DeficienciaService service;
 
     @GetMapping
-    public List<Deficiencia> listALl(){
-        return service.listAll();
+    public ResponseEntity<List<Deficiencia>> listALl(){
+        //return service.listAll();
+        List<Deficiencia> deficienciaList = service.listAll();
+        if(deficienciaList.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }else{
+            for(Deficiencia d : deficienciaList){
+                long id = d.getId();
+                d.add(linkTo(methodOn(DeficienciaController.class).getOne(id)).withSelfRel());
+            }
+            return new ResponseEntity<List<Deficiencia>>(deficienciaList,HttpStatus.OK);
+        }
     }
 
     @GetMapping(path = {"pages/{page}"})
@@ -35,12 +49,15 @@ public class DeficienciaController {
 
     @GetMapping(path = {"/{id}"})
     public ResponseEntity<Deficiencia> getOne(@PathVariable Long id){
-        Optional<Deficiencia> cliente = service.findById(id);
+        Optional<Deficiencia> deficiencia = service.findById(id);
 
-        if (cliente.isEmpty()){
-            return ResponseEntity.notFound().build();
+        if (deficiencia.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            //return ResponseEntity.notFound().build();
         }else{
-            return ResponseEntity.ok(cliente.get());
+            deficiencia.get().add(linkTo(methodOn(DeficienciaController.class).listALl()).withRel("Lista de deficiências"));
+            return new ResponseEntity<Deficiencia>(deficiencia.get(),HttpStatus.OK);
+            //return ResponseEntity.ok(cliente.get());
         }
     }
 

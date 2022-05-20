@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,5 +33,10 @@ public class Vinculo {
 	@Column(nullable = false)
 	private LocalDateTime data_nomeacao;
 	private String desconto_irpf;
+	
+	
+	@ManyToOne
+	private Servidor servidor ;
+
 
 }

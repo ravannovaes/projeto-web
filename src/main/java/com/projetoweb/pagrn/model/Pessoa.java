@@ -42,6 +42,8 @@ public class Pessoa {
 	@Column(nullable = false)
 	private String nomeMae;
 	private String foto;
+	
+	
 	@ManyToOne
 	private Endereco endereco;
 
@@ -51,6 +53,8 @@ public class Pessoa {
 			joinColumns = @JoinColumn(name="pessoa_id"),
 			inverseJoinColumns = @JoinColumn(name="course_id")	)
 	private Set<Deficiencia> deficiencias;
+	
+	
 
 	public Pessoa(String nome, String email, String telefone, String sexo, LocalDateTime dataNasc, String nomeMae,Endereco endereco) {
 

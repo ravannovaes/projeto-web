@@ -1,12 +1,8 @@
 package com.projetoweb.pagrn.model;
 
+import lombok.*;
+
 import javax.persistence.*;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.hateoas.RepresentationModel;
-
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -14,8 +10,10 @@ import java.util.Set;
 @Entity(name="Pessoa")
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class Pessoa extends RepresentationModel<Pessoa> {
+@Getter
+@Setter
+@ToString
+public class Pessoa {
 	@Id
 	@GeneratedValue(strategy =GenerationType.AUTO ) 
 	private Long id ;
@@ -38,6 +36,8 @@ public class Pessoa extends RepresentationModel<Pessoa> {
 	@Column(nullable = false)
 	private String nomeMae;
 	private String foto;
+	
+	
 	@ManyToOne
 	private Endereco endereco;
 
@@ -47,8 +47,11 @@ public class Pessoa extends RepresentationModel<Pessoa> {
 			joinColumns = @JoinColumn(name="pessoa_id"),
 			inverseJoinColumns = @JoinColumn(name="course_id")	)
 	private Set<Deficiencia> deficiencias;
+	
+	
 
-	public Pessoa(String nome, String email, String telefone, String sexo, LocalDateTime dataNasc, String nomeMae,Endereco endereco) {
+	public Pessoa(String nome, String email, String telefone, String sexo, 
+			LocalDateTime dataNasc, String nomeMae,Endereco endereco) {
 
 		this.nome = nome;
 		this.email = email;

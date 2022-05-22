@@ -1,12 +1,9 @@
 package com.projetoweb.pagrn.model;
 
-import org.springframework.hateoas.RepresentationModel;
-
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity(name="Deficiencia")
-public class Deficiencia extends RepresentationModel<Deficiencia> {
+public class Deficiencia {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO )
     private Long id;

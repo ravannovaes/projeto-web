@@ -34,9 +34,21 @@ public class Vinculo {
 	private LocalDateTime data_nomeacao;
 	private String desconto_irpf;
 	
+	//Instância DTO
+	
 	
 	@ManyToOne
 	private Servidor servidor ;
+
+	public Vinculo(LocalDateTime data_exercicio, LocalDateTime data_posse, LocalDateTime data_nomeacao,
+	 Servidor servidor) {
+		this.data_exercicio = data_exercicio;
+		this.data_posse = data_posse;
+		this.data_nomeacao = data_nomeacao;
+		//this.desconto_irpf = desconto_irpf;
+		this.servidor = servidor;
+	}
+
 
 
 }

@@ -3,7 +3,6 @@ package com.projetoweb.pagrn.model;
 import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -56,7 +55,8 @@ public class Pessoa {
 	
 	
 
-	public Pessoa(String nome, String email, String telefone, String sexo, LocalDateTime dataNasc, String nomeMae,Endereco endereco) {
+	public Pessoa(String nome, String email, String telefone, String sexo, 
+			LocalDateTime dataNasc, String nomeMae,Endereco endereco) {
 
 		this.nome = nome;
 		this.email = email;

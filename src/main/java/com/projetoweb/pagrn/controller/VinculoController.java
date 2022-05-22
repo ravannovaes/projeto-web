@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.projetoweb.pagrn.model.Vinculo;
 import com.projetoweb.pagrn.service.VinculoService;
+
+import dto.VinculoDtoResquest;
 
 @RestController
 @RequestMapping("/vinculo")
@@ -40,14 +43,17 @@ public class VinculoController {
 	        }
 	    }
 
+	    
 	    @PostMapping
-	    public ResponseEntity<Vinculo> insert(@RequestBody Vinculo c){
-	        if(c.getData_exercicio () == null ){
-	            return ResponseEntity.status(400).body(c);
+	    public ResponseEntity<Vinculo> insert(@RequestBody VinculoDtoResquest c){
+	        if(c.getData_exercicio() == null ){
+	        	
+	            return ResponseEntity.status(400).body(c.convertToVinculo());
 	        }
-	        Vinculo Vinculo = service.insert(c);
-	        return ResponseEntity.status(201).body(Vinculo);
+	        Vinculo DTO = service.insert(c.convertToVinculo());
+	        return ResponseEntity.status(201).body(DTO);
 	    }
+	    
 
 	    @PutMapping(path = {"/{id}"})
 	    public ResponseEntity<Vinculo> update(@PathVariable Long id, @RequestBody Vinculo c){

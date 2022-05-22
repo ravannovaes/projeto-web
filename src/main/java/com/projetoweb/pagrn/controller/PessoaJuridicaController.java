@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projetoweb.pagrn.model.PessoaJuridica;
+
 import com.projetoweb.pagrn.service.PessoaJuridicaService;
+
+import dto.PessoaJuridicaDtoRequest;
+
 
 @RestController
 @RequestMapping("/pessoajuridica")
@@ -39,8 +43,17 @@ public class PessoaJuridicaController {
 			return ResponseEntity.ok(cliente.get());
 		}
 	}
-
+	
 	@PostMapping
+	 public ResponseEntity<PessoaJuridica> insert(@RequestBody PessoaJuridicaDtoRequest c){
+	        if(c.getNome () == null ){
+	            return ResponseEntity.status(400).body(c.convertToPessoaJuridica() );
+	        }
+	        PessoaJuridica DTO = service.insert(c.convertToPessoaJuridica());
+	        return ResponseEntity.status(201).body(DTO);
+	    }
+	 
+	/*
 	public ResponseEntity<PessoaJuridica> insert(@RequestBody PessoaJuridica c){
 		if(c.getCnpj() == null ){
 			return ResponseEntity.status(400).body(c);
@@ -48,6 +61,7 @@ public class PessoaJuridicaController {
 		PessoaJuridica	PessoaJuridica = service.insert(c);
 		return ResponseEntity.status(201).body(PessoaJuridica);
 	}
+	*/
 
 	@PutMapping(path = {"/{id}"})
 	public ResponseEntity<PessoaJuridica> update(@PathVariable Long id, @RequestBody PessoaJuridica c){

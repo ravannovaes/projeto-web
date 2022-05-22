@@ -1,21 +1,26 @@
 package com.projetoweb.pagrn.controller;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.Optional;
+
 
 import com.projetoweb.pagrn.model.Servidor;
 import com.projetoweb.pagrn.service.ServidorService;
+
+import dto.ServidorDtoRequest;
+import dto.ServidorDtoResponse;
 
 
 @RestController
@@ -31,24 +36,42 @@ public class ServidorController {
 	    }
 
 	    @GetMapping(path = {"/{id}"})
-	    public ResponseEntity<Servidor> getOne(@PathVariable Long id){
+	    public ResponseEntity<ServidorDtoResponse> getOne(@PathVariable Long id){
 	        Optional<Servidor> cliente = service.findById(id);
 
 	        if (cliente.isEmpty()){
 	            return ResponseEntity.notFound().build();
 	        }else{
-	            return ResponseEntity.ok(cliente.get());
+	            ServidorDtoResponse servidorDtoResponse = new ServidorDtoResponse(cliente.get());
+	            return ResponseEntity.ok().body(servidorDtoResponse);
 	        }
 	    }
 
+	    
 	    @PostMapping
-	    public ResponseEntity<Servidor> insert(@RequestBody Servidor c){
-	        if(c.getMatricula() == null ){
+	    public ResponseEntity<Servidor> insert(@RequestBody ServidorDtoRequest c){
+	        if(c.getNome_social () == null ){
+	            return ResponseEntity.status(400).body(c.convertToservidor());
+	        }
+	        Servidor ServidorDTO = service.insert(c.convertToservidor());
+	        return ResponseEntity.status(201).body(ServidorDTO);
+	    }
+	    
+	    /*
+	    @PostMapping
+	    public Servidor insert(@RequestBody ServidorDtoRequest c){
+	    	   return service.insert( c.convertToservidor());
+	    }
+	    */
+	        
+	    /*	
+	    	if(c.getMatricula() == null ){
 	            return ResponseEntity.status(400).body(c);
 	        }
 	        Servidor Servidor = service.insert(c);
 	        return ResponseEntity.status(201).body(Servidor);
 	    }
+	    */
 
 	    @PutMapping(path = {"/{id}"})
 	    public ResponseEntity<Servidor> update(@PathVariable Long id, @RequestBody Servidor c){

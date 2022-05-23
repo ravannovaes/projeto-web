@@ -18,8 +18,10 @@ public class PessoaController {
 	private PessoaService service;
 
 	@GetMapping
-	public List<Pessoa> listALl(){
-		return service.listAll();
+	public List<Pessoa> listALl(@RequestParam(required = false,defaultValue="0") Boolean asc,
+								@RequestParam(required = false,defaultValue="id") String col,
+								@RequestParam(required = false,defaultValue="0") int page){
+		return service.listAll(asc,col,page);
 	}
 
 	@GetMapping(path = {"/{id}"})

@@ -18,8 +18,10 @@ public class EnderecoController {
     private EnderecoService service;
 
     @GetMapping
-    public List<Endereco> listALl(){
-        return service.listAll();
+    public List<Endereco> listALl(@RequestParam(required = false,defaultValue="0") Boolean asc,
+                                  @RequestParam(required = false,defaultValue="id") String col,
+                                  @RequestParam(required = false,defaultValue="0") int page){
+        return service.listAll(asc,col,page);
     }
 
     @GetMapping(path = {"/{id}"})

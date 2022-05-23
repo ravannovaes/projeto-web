@@ -18,17 +18,19 @@ public class DeficienciaController {
     private DeficienciaService service;
 
     @GetMapping
-    public List<Deficiencia> listALl(){
-        return service.listAll();
+    public List<Deficiencia> listALl(@RequestParam(required = false,defaultValue="0") Boolean asc,
+                                     @RequestParam(required = false,defaultValue="id") String col,
+                                     @RequestParam(required = false,defaultValue="0") int page){
+        return service.listAll(asc,col,page);
     }
 
-    @GetMapping(path = {"pages/{page}"})
+    /*@GetMapping(path = {"pages/{page}"})
     public List<Deficiencia> listPages(@PathVariable Long page){
         if(page!= null && !page.equals(null)){
             return service.paginatedList(page);
         }
-        return service.listAll();
-    }
+        return service.listAll(asc, col, page);
+    }*/
 
     @GetMapping(path = {"/{id}"})
     public ResponseEntity<Deficiencia> getOne(@PathVariable Long id){

@@ -19,8 +19,10 @@ public class PessoaJuridicaController {
 	private PessoaJuridicaService service;
 
 	@GetMapping
-	public List<PessoaJuridica> listALl(){
-		return service.listAll();
+	public List<PessoaJuridica> listALl(@RequestParam(required = false,defaultValue="0") Boolean asc,
+										@RequestParam(required = false,defaultValue="id") String col,
+										@RequestParam(required = false,defaultValue="0") int page){
+		return service.listAll(asc,col,page);
 	}
 
 	@GetMapping(path = {"/{id}"})

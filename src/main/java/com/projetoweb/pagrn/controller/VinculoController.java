@@ -18,8 +18,10 @@ public class VinculoController {
 	    private VinculoService service;
 
 	    @GetMapping
-	    public List<Vinculo> listALl(){
-	        return service.listAll();
+	    public List<Vinculo> listALl(@RequestParam(required = false,defaultValue="0") Boolean asc,
+									 @RequestParam(required = false,defaultValue="id") String col,
+									 @RequestParam(required = false,defaultValue="0") int page){
+			return service.listAll(asc,col,page);
 	    }
 
 	    @GetMapping(path = {"/{id}"})

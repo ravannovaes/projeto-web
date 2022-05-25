@@ -19,12 +19,14 @@ public class ServidorDtoResponse extends RepresentationModel<ServidorDtoResponse
 	String nome_social ;
 	String eh_etrangeiro ;
 	Pessoa pessoa ;
+	Long id;
 	
 	
 	public ServidorDtoResponse (Servidor s){
-		
-		this.nome_social = s.getNome_social() ;
-		this.eh_etrangeiro = s.getEh_etrangeiro();
+
+		this.id = s.getId();
+		this.nome_social = s.getNomeSocial() ;
+		this.eh_etrangeiro = s.getEstrangeiro();
 		this.pessoa= s.getPessoa();
 		
 	    add(linkTo(ServidorController.class).slash(s.getId()).withSelfRel());

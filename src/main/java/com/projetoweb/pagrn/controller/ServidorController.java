@@ -5,26 +5,33 @@ import com.projetoweb.pagrn.service.ServidorService;
 import dto.ServidorDtoRequest;
 import dto.ServidorDtoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping("/servidor")
+@RequestMapping("api/servidor")
 public class ServidorController {
 	
 	   @Autowired
 	    private ServidorService service;
 
 	    @GetMapping
-	    public List<Servidor> listALl(@RequestParam(required = false,defaultValue="0") Boolean asc,
-									  @RequestParam(required = false,defaultValue="id") String col,
-									  @RequestParam(required = false,defaultValue="0") int page){
-			return service.listAll(asc,col,page);
-	    }
+		public ResponseEntity<Page<ServidorDtoResponse>>listAll(@PageableDefault(size = 10) Pageable pageable){
+			Page<Servidor> list = service.listAll(pageable);
+
+			Page<ServidorDtoResponse> listDTO = list.map(obj -> new ServidorDtoResponse(obj));
+
+			return ResponseEntity.ok(listDTO);
+		}
 
 	    @GetMapping(path = {"/{id}"})
 	    public ResponseEntity<ServidorDtoResponse> getOne(@PathVariable Long id){
@@ -41,7 +48,7 @@ public class ServidorController {
 	    
 	    @PostMapping
 	    public ResponseEntity<Servidor> insert(@RequestBody ServidorDtoRequest c){
-	        if(c.getNome_social () == null ){
+	        if(c.getNomeSocial () == null ){
 	            return ResponseEntity.status(400).body(c.convertToservidor());
 	        }
 	        Servidor ServidorDTO = service.insert(c.convertToservidor());

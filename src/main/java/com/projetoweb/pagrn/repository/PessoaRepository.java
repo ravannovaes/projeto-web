@@ -12,3 +12,5 @@ public interface PessoaRepository extends PagingAndSortingRepository<Pessoa,Long
     Page<Pessoa> findAll();
     Pessoa saveAndFlush(Pessoa entity);
 }
+/*public interface PessoaRepository extends JpaRepository<Pessoa,Long> {
+}*/

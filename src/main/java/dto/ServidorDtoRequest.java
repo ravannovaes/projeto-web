@@ -12,11 +12,11 @@ import lombok.*;
 @ToString
 public class ServidorDtoRequest {
 	
-    String nome_social ;
-	String eh_etrangeiro ;
+    String nomeSocial ;
+	String estrangeiro ;
 	Pessoa pessoa ;
  
 	public Servidor convertToservidor() {
-			return new Servidor( this.nome_social,this.eh_etrangeiro, this.pessoa);
+			return new Servidor( this.nomeSocial,this.estrangeiro, this.pessoa);
 		}
 }

@@ -1,22 +1,17 @@
 package dto;
 
-import java.time.LocalDateTime;
-
 import com.projetoweb.pagrn.model.Servidor;
 import com.projetoweb.pagrn.model.Vinculo;
+import lombok.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-public class VinculoDtoResquest {
+public class VinculoDtoRequest {
 	
 
 	LocalDateTime data_exercicio ;

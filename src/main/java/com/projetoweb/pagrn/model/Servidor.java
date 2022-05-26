@@ -1,17 +1,8 @@
 package com.projetoweb.pagrn.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import lombok.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,15 +18,15 @@ public class Servidor {
 	
 	private Long matricula ;
 	@Column(nullable = false)
-	private String nome_social ;
-	private String eh_etrangeiro ;	
+	private String nomeSocial ;
+	private String estrangeiro ;
 	
 	@ManyToOne
 	private Pessoa pessoa ;
 
-	public Servidor ( String nome_social, String eh_etrangeiro, Pessoa pessoa) {
-		this.nome_social=nome_social;
-		this.eh_etrangeiro=eh_etrangeiro;
+	public Servidor ( String nomeSocial, String estrangeiro, Pessoa pessoa) {
+		this.nomeSocial=nomeSocial;
+		this.estrangeiro=estrangeiro;
 		this.pessoa= pessoa;
 		
 	}

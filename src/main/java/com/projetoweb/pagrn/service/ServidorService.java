@@ -1,11 +1,17 @@
 package com.projetoweb.pagrn.service;
 
+
 import java.util.List;
 import java.util.Optional;
 
+import com.projetoweb.pagrn.model.Pessoa;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.projetoweb.pagrn.model.Servidor;
@@ -45,8 +51,18 @@ public class ServidorService {
 	        return repository.findById(id);
 	    }
 
-	    public List<Servidor> listAll(){
-	        return repository.findAll();
+
+		public Page<Servidor> listAll(Pageable pageable){
+	    //public List<Servidor> listAll(Boolean asc, String col, int page){
+			//Pageable pageSearch;
+
+			//pageSearch = asc == Boolean.FALSE ?
+			//		PageRequest.of(page, 5, Sort.by(col).descending()) :
+			//		PageRequest.of(page, 5, Sort.by(col).ascending());
+
+			//List<Servidor> result = repository.findAll(pageSearch).getContent();
+			return repository.findAll(pageable);
+			//return result;
 	    }
 }
 

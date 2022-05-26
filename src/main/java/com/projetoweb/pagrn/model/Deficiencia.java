@@ -1,7 +1,6 @@
 package com.projetoweb.pagrn.model;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity(name="Deficiencia")
 public class Deficiencia {

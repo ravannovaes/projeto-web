@@ -1,39 +1,37 @@
 package com.projetoweb.pagrn.controller;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.List;
-
+import com.projetoweb.pagrn.model.Servidor;
+import com.projetoweb.pagrn.service.ServidorService;
+import dto.ServidorDtoRequest;
+import dto.ServidorDtoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+
+
 import java.util.Optional;
 
 
-import com.projetoweb.pagrn.model.Servidor;
-import com.projetoweb.pagrn.service.ServidorService;
-
-import dto.ServidorDtoRequest;
-import dto.ServidorDtoResponse;
-
 
 @RestController
-@RequestMapping("/servidor")
+@RequestMapping("api/servidor")
 public class ServidorController {
 	
 	   @Autowired
 	    private ServidorService service;
 
 	    @GetMapping
-	    public List<Servidor> listALl(){
-	        return service.listAll();
-	    }
+		public ResponseEntity<Page<ServidorDtoResponse>>listAll(@PageableDefault(size = 10) Pageable pageable){
+			Page<Servidor> list = service.listAll(pageable);
+
+			Page<ServidorDtoResponse> listDTO = list.map(obj -> new ServidorDtoResponse(obj));
+
+			return ResponseEntity.ok(listDTO);
+		}
 
 	    @GetMapping(path = {"/{id}"})
 	    public ResponseEntity<ServidorDtoResponse> getOne(@PathVariable Long id){
@@ -50,7 +48,7 @@ public class ServidorController {
 	    
 	    @PostMapping
 	    public ResponseEntity<Servidor> insert(@RequestBody ServidorDtoRequest c){
-	        if(c.getNome_social () == null ){
+	        if(c.getNomeSocial () == null ){
 	            return ResponseEntity.status(400).body(c.convertToservidor());
 	        }
 	        Servidor ServidorDTO = service.insert(c.convertToservidor());

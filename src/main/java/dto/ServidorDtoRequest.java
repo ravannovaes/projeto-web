@@ -2,12 +2,7 @@ package dto;
 
 import com.projetoweb.pagrn.model.Pessoa;
 import com.projetoweb.pagrn.model.Servidor;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 
 @AllArgsConstructor
@@ -17,11 +12,11 @@ import lombok.ToString;
 @ToString
 public class ServidorDtoRequest {
 	
-    String nome_social ;
-	String eh_etrangeiro ;
+    String nomeSocial ;
+	String estrangeiro ;
 	Pessoa pessoa ;
  
 	public Servidor convertToservidor() {
-			return new Servidor( this.nome_social,this.eh_etrangeiro, this.pessoa);
+			return new Servidor( this.nomeSocial,this.estrangeiro, this.pessoa);
 		}
 }

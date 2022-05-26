@@ -1,24 +1,18 @@
 package com.projetoweb.pagrn.controller;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.projetoweb.pagrn.model.PessoaJuridica;
 
 import com.projetoweb.pagrn.service.PessoaJuridicaService;
-
 import dto.PessoaJuridicaDtoRequest;
+import dto.PessoaJuridicaDtoResponse;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -29,10 +23,14 @@ public class PessoaJuridicaController {
 	private PessoaJuridicaService service;
 
 	@GetMapping
-	public List<PessoaJuridica> listALl(){
-		return service.listAll();
+	public List<PessoaJuridica> listALl(@RequestParam(required = false,defaultValue="0") Boolean asc,
+										@RequestParam(required = false,defaultValue="id") String col,
+										@RequestParam(required = false,defaultValue="0") int page){
+		return service.listAll(asc,col,page);
 	}
 
+	
+	/*
 	@GetMapping(path = {"/{id}"})
 	public ResponseEntity<PessoaJuridica> getOne(@PathVariable Long id){
 		Optional<PessoaJuridica> cliente = service.findById(id);
@@ -43,7 +41,24 @@ public class PessoaJuridicaController {
 			return ResponseEntity.ok(cliente.get());
 		}
 	}
+	*/
 	
+	
+	
+	 @GetMapping(path = {"/{id}"})
+	    public ResponseEntity<PessoaJuridicaDtoResponse> getOne(@PathVariable Long id){
+	        Optional<PessoaJuridica> cliente = service.findById(id);
+
+	        if (cliente.isEmpty()){
+	            return ResponseEntity.notFound().build();
+	        }else{
+	            PessoaJuridicaDtoResponse PessoaJuridicaDtoResponse = new PessoaJuridicaDtoResponse(cliente.get());
+	            return ResponseEntity.ok().body(PessoaJuridicaDtoResponse);
+	        }
+	    }
+	    
+	
+ 
 	@PostMapping
 	 public ResponseEntity<PessoaJuridica> insert(@RequestBody PessoaJuridicaDtoRequest c){
 	        if(c.getNome () == null ){
@@ -52,6 +67,7 @@ public class PessoaJuridicaController {
 	        PessoaJuridica DTO = service.insert(c.convertToPessoaJuridica());
 	        return ResponseEntity.status(201).body(DTO);
 	    }
+	
 	 
 	/*
 	public ResponseEntity<PessoaJuridica> insert(@RequestBody PessoaJuridica c){

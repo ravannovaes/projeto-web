@@ -1,11 +1,8 @@
 package dto;
+
 import com.projetoweb.pagrn.model.Endereco;
 import com.projetoweb.pagrn.model.PessoaJuridica;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor

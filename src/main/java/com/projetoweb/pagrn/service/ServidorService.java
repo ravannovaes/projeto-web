@@ -1,10 +1,11 @@
 package com.projetoweb.pagrn.service;
 
 
-import java.util.List;
+import java.time.LocalDate;
+
 import java.util.Optional;
 
-import com.projetoweb.pagrn.model.Pessoa;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,9 @@ public class ServidorService {
 
 	    public void delete (Servidor c){
 	        logger.info("Servidor deletado no sistema com sucesso");
-	        repository.delete(c);
+	        c.setDataExoneracao(LocalDate.now());
+	        repository.save(c);
+	     //   repository.delete(c);
 	    }
 
 	    public Servidor saveAndFlush(Servidor c){

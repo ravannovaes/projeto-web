@@ -2,6 +2,8 @@ package com.projetoweb.pagrn.model;
 
 import lombok.*;
 
+import java.time.LocalDate;
+
 import javax.persistence.*;
 
 @AllArgsConstructor
@@ -20,14 +22,17 @@ public class Servidor {
 	@Column(nullable = false)
 	private String nomeSocial ;
 	private String estrangeiro ;
+	private LocalDate dataExoneracao;
 	
 	@ManyToOne
 	private Pessoa pessoa ;
 
-	public Servidor ( String nomeSocial, String estrangeiro, Pessoa pessoa) {
+	public Servidor ( String nomeSocial, String estrangeiro, Pessoa pessoa, LocalDate dataExoneracao) {
 		this.nomeSocial=nomeSocial;
 		this.estrangeiro=estrangeiro;
 		this.pessoa= pessoa;
+		this.dataExoneracao= dataExoneracao;
+		
 		
 	}
 	

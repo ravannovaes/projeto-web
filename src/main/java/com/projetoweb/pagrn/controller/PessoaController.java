@@ -1,10 +1,10 @@
 package com.projetoweb.pagrn.controller;
 
 import com.projetoweb.pagrn.model.Pessoa;
-import com.projetoweb.pagrn.model.Servidor;
+
 import com.projetoweb.pagrn.service.PessoaService;
 import dto.PessoaDtoResponse;
-import dto.ServidorDtoResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -53,11 +53,14 @@ public class PessoaController {
 
 	@PostMapping
 	public ResponseEntity<Pessoa> insert(@RequestBody Pessoa c){
-		if(c.getCpf() == null || c.getDataNasc()== null || c.getTelefone()== null ||
+		
+		/*if(c.getCpf() == null || c.getDataNasc()== null || c.getTelefone()== null ||
 				c.getNome()== null || c.getNomeMae()== null || c.getSexo()== null ||
 				c.getEstadoCivil()== null){
 			return ResponseEntity.status(400).body(c);
 		}
+		*/
+		
 		Pessoa	pessoa = service.insert(c);
 		return ResponseEntity.status(201).body(pessoa);
 	}

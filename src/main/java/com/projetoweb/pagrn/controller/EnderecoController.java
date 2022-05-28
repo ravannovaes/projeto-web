@@ -46,9 +46,11 @@ public class EnderecoController {
     
     @PostMapping
     public ResponseEntity<Endereco> insert(@RequestBody EnderecoDtoRequest c){
-        if((c.getCep() == null ) ){
+       /*
+    	if((c.getCep() == null ) ){
             return ResponseEntity.status(400).body(c.convertToEndereco());
         }
+        */
         Endereco EnderecoDTO = service.insert(c.convertToEndereco());
         return ResponseEntity.status(201).body(EnderecoDTO);
     }

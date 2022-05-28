@@ -61,9 +61,8 @@ public class PessoaJuridicaController {
  
 	@PostMapping
 	 public ResponseEntity<PessoaJuridica> insert(@RequestBody PessoaJuridicaDtoRequest c){
-	        if(c.getNome () == null ){
-	            return ResponseEntity.status(400).body(c.convertToPessoaJuridica() );
-	        }
+		
+	  
 	        PessoaJuridica DTO = service.insert(c.convertToPessoaJuridica());
 	        return ResponseEntity.status(201).body(DTO);
 	    }

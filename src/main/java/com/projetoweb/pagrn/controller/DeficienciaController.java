@@ -1,13 +1,8 @@
 package com.projetoweb.pagrn.controller;
 
 import com.projetoweb.pagrn.model.Deficiencia;
-import com.projetoweb.pagrn.model.Servidor;
-import com.projetoweb.pagrn.service.DeficienciaService;
 
-import dto.DeficienciaDtoRequest;
-import dto.DeficienciaDtoResponse;
-import dto.ServidorDtoRequest;
-import dto.ServidorDtoResponse;
+import com.projetoweb.pagrn.service.DeficienciaService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -11,7 +11,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/endereco")
+@RequestMapping("/api/endereco")
 public class EnderecoController {
 
     @Autowired
@@ -46,6 +46,7 @@ public class EnderecoController {
 
     @PutMapping(path = {"/{id}"})
     public ResponseEntity<Endereco> update(@PathVariable Long id, @RequestBody Endereco c){
+        c.setId(id);
         return service.findById(id)
                 .map( record -> {
                     service.saveAndFlush(c);

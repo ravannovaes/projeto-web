@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/vinculo")
+@RequestMapping("/api/vinculo")
 public class VinculoController {
 	
 	   @Autowired
@@ -49,6 +49,7 @@ public class VinculoController {
 
 	    @PutMapping(path = {"/{id}"})
 	    public ResponseEntity<Vinculo> update(@PathVariable Long id, @RequestBody Vinculo c){
+	    	c.setId(id);
 	        return service.findById(id)
 	                .map( record -> {
 	                    service.saveAndFlush(c);

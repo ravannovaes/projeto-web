@@ -11,7 +11,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/deficiencia")
+@RequestMapping("/api/deficiencia")
 public class DeficienciaController {
 
     @Autowired
@@ -23,14 +23,6 @@ public class DeficienciaController {
                                      @RequestParam(required = false,defaultValue="0") int page){
         return service.listAll(asc,col,page);
     }
-
-    /*@GetMapping(path = {"pages/{page}"})
-    public List<Deficiencia> listPages(@PathVariable Long page){
-        if(page!= null && !page.equals(null)){
-            return service.paginatedList(page);
-        }
-        return service.listAll(asc, col, page);
-    }*/
 
     @GetMapping(path = {"/{id}"})
     public ResponseEntity<Deficiencia> getOne(@PathVariable Long id){
@@ -54,6 +46,7 @@ public class DeficienciaController {
 
     @PutMapping(path = {"/{id}"})
     public ResponseEntity<Deficiencia> update(@PathVariable Long id, @RequestBody Deficiencia c){
+        c.setId(id);
         return service.findById(id)
                 .map( record -> {
                     service.saveAndFlush(c);

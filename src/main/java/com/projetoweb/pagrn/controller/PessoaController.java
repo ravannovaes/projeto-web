@@ -65,6 +65,7 @@ public class PessoaController {
 
 	@PutMapping(path = {"/{id}"})
 	public ResponseEntity<Pessoa> update(@PathVariable Long id, @RequestBody Pessoa c){
+		c.setId(id);
 		return service.findById(id)
 				.map( record -> {
 					service.saveAndFlush(c);

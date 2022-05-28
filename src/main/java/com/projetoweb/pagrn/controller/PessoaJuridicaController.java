@@ -12,7 +12,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/pessoajuridica")
+@RequestMapping("/api/pessoajuridica")
 public class PessoaJuridicaController {
 	
 	@Autowired
@@ -44,19 +44,10 @@ public class PessoaJuridicaController {
 	        PessoaJuridica DTO = service.insert(c.convertToPessoaJuridica());
 	        return ResponseEntity.status(201).body(DTO);
 	    }
-	 
-	/*
-	public ResponseEntity<PessoaJuridica> insert(@RequestBody PessoaJuridica c){
-		if(c.getCnpj() == null ){
-			return ResponseEntity.status(400).body(c);
-		}
-		PessoaJuridica	PessoaJuridica = service.insert(c);
-		return ResponseEntity.status(201).body(PessoaJuridica);
-	}
-	*/
 
 	@PutMapping(path = {"/{id}"})
 	public ResponseEntity<PessoaJuridica> update(@PathVariable Long id, @RequestBody PessoaJuridica c){
+		c.setId(id);
 		return service.findById(id)
 				.map( record -> {
 					service.saveAndFlush(c);

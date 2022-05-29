@@ -1,8 +1,13 @@
 package com.projetoweb.pagrn.controller;
 
+
+import dto.ServidorDtoResponse;
+import dto.VinculoDtoRequest;
+import dto.VinculoDtoResponse;
+
 import com.projetoweb.pagrn.model.Vinculo;
 import com.projetoweb.pagrn.service.VinculoService;
-import dto.VinculoDtoResquest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/vinculo")
+@RequestMapping("/vinculo")
 public class VinculoController {
 	
 	   @Autowired
@@ -24,6 +29,7 @@ public class VinculoController {
 			return service.listAll(asc,col,page);
 	    }
 
+	   /*
 	    @GetMapping(path = {"/{id}"})
 	    public ResponseEntity<Vinculo> getOne(@PathVariable Long id){
 	        Optional<Vinculo> cliente = service.findById(id);
@@ -34,8 +40,22 @@ public class VinculoController {
 	            return ResponseEntity.ok(cliente.get());
 	        }
 	    }
+	    */
+	    
+	    @GetMapping(path = {"/{id}"})
+	    public ResponseEntity<VinculoDtoResponse> getOne(@PathVariable Long id){
+	        Optional<Vinculo> cliente = service.findById(id);
+
+	        if (cliente.isEmpty()){
+	            return ResponseEntity.notFound().build();
+	        }else{
+	            VinculoDtoResponse VinculoDtoResponse = new VinculoDtoResponse(cliente.get());
+	            return ResponseEntity.ok().body(VinculoDtoResponse);
+	        }
+	    }
 
 	    
+	   /* 
 	    @PostMapping
 	    public ResponseEntity<Vinculo> insert(@RequestBody VinculoDtoResquest c){
 	        if(c.getData_exercicio() == null ){
@@ -45,11 +65,18 @@ public class VinculoController {
 	        Vinculo DTO = service.insert(c.convertToVinculo());
 	        return ResponseEntity.status(201).body(DTO);
 	    }
+	    */
+	    
+	    @PostMapping
+	    public ResponseEntity<Vinculo> insert(@RequestBody VinculoDtoRequest c){
+	    
+	        Vinculo VinculoDTO = service.insert(c.convertToVinculo());
+	        return ResponseEntity.status(201).body(VinculoDTO);
+	    }
 	    
 
 	    @PutMapping(path = {"/{id}"})
 	    public ResponseEntity<Vinculo> update(@PathVariable Long id, @RequestBody Vinculo c){
-	    	c.setId(id);
 	        return service.findById(id)
 	                .map( record -> {
 	                    service.saveAndFlush(c);

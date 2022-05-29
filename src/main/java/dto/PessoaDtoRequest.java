@@ -6,6 +6,8 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -34,5 +36,5 @@ public class PessoaDtoRequest {
 			this.sexo,this.dataNasc,this.nomeMae,this.endereco);
 	}
 	
-//Instanciar pro controller ;
+//Instanciar pro controller;;
 }

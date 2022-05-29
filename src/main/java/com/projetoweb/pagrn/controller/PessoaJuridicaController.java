@@ -1,12 +1,8 @@
 package com.projetoweb.pagrn.controller;
 
 import com.projetoweb.pagrn.model.PessoaJuridica;
-
 import com.projetoweb.pagrn.service.PessoaJuridicaService;
 import dto.PessoaJuridicaDtoRequest;
-import dto.PessoaJuridicaDtoResponse;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +12,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/pessoajuridica")
+@RequestMapping("/api/pessoajuridica")
 public class PessoaJuridicaController {
 	
 	@Autowired
@@ -29,8 +25,6 @@ public class PessoaJuridicaController {
 		return service.listAll(asc,col,page);
 	}
 
-	
-	/*
 	@GetMapping(path = {"/{id}"})
 	public ResponseEntity<PessoaJuridica> getOne(@PathVariable Long id){
 		Optional<PessoaJuridica> cliente = service.findById(id);
@@ -41,45 +35,19 @@ public class PessoaJuridicaController {
 			return ResponseEntity.ok(cliente.get());
 		}
 	}
-	*/
 	
-	
-	
-	 @GetMapping(path = {"/{id}"})
-	    public ResponseEntity<PessoaJuridicaDtoResponse> getOne(@PathVariable Long id){
-	        Optional<PessoaJuridica> cliente = service.findById(id);
-
-	        if (cliente.isEmpty()){
-	            return ResponseEntity.notFound().build();
-	        }else{
-	            PessoaJuridicaDtoResponse PessoaJuridicaDtoResponse = new PessoaJuridicaDtoResponse(cliente.get());
-	            return ResponseEntity.ok().body(PessoaJuridicaDtoResponse);
-	        }
-	    }
-	    
-	
- 
 	@PostMapping
 	 public ResponseEntity<PessoaJuridica> insert(@RequestBody PessoaJuridicaDtoRequest c){
-		
-	  
+	        if(c.getNome () == null ){
+	            return ResponseEntity.status(400).body(c.convertToPessoaJuridica() );
+	        }
 	        PessoaJuridica DTO = service.insert(c.convertToPessoaJuridica());
 	        return ResponseEntity.status(201).body(DTO);
 	    }
-	
-	 
-	/*
-	public ResponseEntity<PessoaJuridica> insert(@RequestBody PessoaJuridica c){
-		if(c.getCnpj() == null ){
-			return ResponseEntity.status(400).body(c);
-		}
-		PessoaJuridica	PessoaJuridica = service.insert(c);
-		return ResponseEntity.status(201).body(PessoaJuridica);
-	}
-	*/
 
 	@PutMapping(path = {"/{id}"})
 	public ResponseEntity<PessoaJuridica> update(@PathVariable Long id, @RequestBody PessoaJuridica c){
+		c.setId(id);
 		return service.findById(id)
 				.map( record -> {
 					service.saveAndFlush(c);

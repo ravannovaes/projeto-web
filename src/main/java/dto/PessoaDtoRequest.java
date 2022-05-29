@@ -6,8 +6,6 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

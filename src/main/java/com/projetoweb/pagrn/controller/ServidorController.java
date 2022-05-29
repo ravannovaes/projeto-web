@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-
 import java.util.Optional;
 
 
@@ -48,29 +47,16 @@ public class ServidorController {
 	    
 	    @PostMapping
 	    public ResponseEntity<Servidor> insert(@RequestBody ServidorDtoRequest c){
-	      
+	        if(c.getNomeSocial () == null ){
+	            return ResponseEntity.status(400).body(c.convertToservidor());
+	        }
 	        Servidor ServidorDTO = service.insert(c.convertToservidor());
 	        return ResponseEntity.status(201).body(ServidorDTO);
 	    }
-	    
-	    /*
-	    @PostMapping
-	    public Servidor insert(@RequestBody ServidorDtoRequest c){
-	    	   return service.insert( c.convertToservidor());
-	    }
-	    */
-	        
-	    /*	
-	    	if(c.getMatricula() == null ){
-	            return ResponseEntity.status(400).body(c);
-	        }
-	        Servidor Servidor = service.insert(c);
-	        return ResponseEntity.status(201).body(Servidor);
-	    }
-	    */
 
 	    @PutMapping(path = {"/{id}"})
 	    public ResponseEntity<Servidor> update(@PathVariable Long id, @RequestBody Servidor c){
+	    	c.setId(id);
 	        return service.findById(id)
 	                .map( record -> {
 	                    service.saveAndFlush(c);

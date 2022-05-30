@@ -38,10 +38,6 @@ public class VinculoController {
 	    
 	    @PostMapping
 	    public ResponseEntity<Vinculo> insert(@RequestBody VinculoDtoResquest c){
-	        if(c.getData_exercicio() == null ){
-	        	
-	            return ResponseEntity.status(400).body(c.convertToVinculo());
-	        }
 	        Vinculo DTO = service.insert(c.convertToVinculo());
 	        return ResponseEntity.status(201).body(DTO);
 	    }

@@ -48,9 +48,6 @@ public class ServidorController {
 	    
 	    @PostMapping
 	    public ResponseEntity<Servidor> insert(@RequestBody ServidorDtoRequest c){
-	        if(c.getNomeSocial () == null ){
-	            return ResponseEntity.status(400).body(c.convertToservidor());
-	        }
 	        Servidor ServidorDTO = service.insert(c.convertToservidor());
 	        return ResponseEntity.status(201).body(ServidorDTO);
 	    }

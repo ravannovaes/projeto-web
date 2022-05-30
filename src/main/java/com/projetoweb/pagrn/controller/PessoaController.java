@@ -54,11 +54,6 @@ public class PessoaController {
 
 	@PostMapping
 	public ResponseEntity<Pessoa> insert(@RequestBody Pessoa c){
-		if(c.getCpf() == null || c.getDataNasc()== null || c.getTelefone()== null ||
-				c.getNome()== null || c.getNomeMae()== null || c.getSexo()== null ||
-				c.getEstadoCivil()== null){
-			return ResponseEntity.status(400).body(c);
-		}
 		Pessoa	pessoa = service.insert(c);
 		return ResponseEntity.status(201).body(pessoa);
 	}

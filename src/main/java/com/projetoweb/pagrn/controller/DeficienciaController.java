@@ -37,9 +37,6 @@ public class DeficienciaController {
 
     @PostMapping
     public ResponseEntity<Deficiencia> insert(@RequestBody Deficiencia c){
-        if(c.getDenominacao() == null ){
-            return ResponseEntity.status(400).body(c);
-        }
         Deficiencia	deficiencia = service.insert(c);
         return ResponseEntity.status(201).body(deficiencia);
     }

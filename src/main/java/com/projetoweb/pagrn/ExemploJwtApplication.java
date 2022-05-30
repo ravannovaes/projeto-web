@@ -30,9 +30,9 @@ public class ExemploJwtApplication {
     public void initUsers() {
 
         List<Usuario> users = Stream.of(
-                new Usuario(1L, "Manoel","manoel@gmail.com", "admin", encoder().encode("admin"), "ROLE_ADMIN"),
-                new Usuario(2L, "João","joao@gmail.com", "user1", encoder().encode("user1"), "ROLE_USER"),
-                new Usuario(3L, "Maria","maria@gmail.com", "user2", encoder().encode("user2"), "ROLE_USER")
+                new Usuario(1L, "Ravan","ravan@gmail.com", "admin", encoder().encode("admin"), "ROLE_ADMIN"),
+                new Usuario(2L, "Paulo","paulo@gmail.com", "user1", encoder().encode("user1"), "ROLE_USER")
+
         ).collect(Collectors.toList());
 
         repository.saveAll(users);

@@ -42,8 +42,6 @@ public class PessoaJuridicaDtoResponse extends RepresentationModel <PessoaJuridi
 	   this.nome = pessoaJuridica.getNome();
 	   this.email = pessoaJuridica.getEmail();
 	   this.telefone = pessoaJuridica.getTelefone();
-	   this.estadoCivil = pessoaJuridica.getEstadoCivil();
-	   this.sexo = pessoaJuridica.getSexo();
 	   this.cnpj = pessoaJuridica.getCnpj();
 	   this.razaosocial = pessoaJuridica.getRazaosocial();
 	   

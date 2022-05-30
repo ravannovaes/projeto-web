@@ -23,7 +23,7 @@ public class PessoaJuridicaDtoRequest {
 	Endereco endereco;
 	
 	public PessoaJuridica convertToPessoaJuridica() {
-		return new PessoaJuridica( this.id,this.nome, this.email,this.telefone,this.estadoCivil,this.sexo,this.cnpj,this.razaosocial,this.endereco);
+		return new PessoaJuridica( this.id,this.nome, this.email,this.telefone,this.cnpj,this.razaosocial,this.endereco);
 	}
 
 }

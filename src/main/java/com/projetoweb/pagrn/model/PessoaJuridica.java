@@ -22,10 +22,6 @@ public class PessoaJuridica {
 	@Column(nullable = false)
 	private String telefone ;
 	@Column(nullable = false)
-	private String estadoCivil;
-	@Column(nullable = false)
-	private String sexo;
-	@Column(nullable = false)
 	private String cnpj;
 	@Column(nullable = false)
 	private String razaosocial;

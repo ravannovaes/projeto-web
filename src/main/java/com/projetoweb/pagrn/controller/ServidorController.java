@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping("api/servidor")
+@RequestMapping("/api/servidor")
 public class ServidorController {
 	
 	   @Autowired
